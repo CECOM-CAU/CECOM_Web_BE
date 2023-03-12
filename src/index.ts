@@ -13,6 +13,6 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Hello, World!");
 });
 
-app.listen(8080, () => {
+app.listen(7777, () => {
     console.log("Server is Running with Port 8080");
 })
