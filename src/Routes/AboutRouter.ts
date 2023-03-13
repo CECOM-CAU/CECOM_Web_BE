@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getFirestore,  doc, getDoc, collection, getDocs, DocumentData } from "firebase/firestore";
+import { getFirestore, collection, getDocs, DocumentData } from "firebase/firestore";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -24,43 +24,42 @@ const db = getFirestore(app);
 
 const aboutRouter = express.Router();
 
-aboutRouter.get("/", async (req: Request, res: Response) => {
-    const Data: DocumentData[] = [];
-    const collectionRef = collection(db, "Members");
-    const memberList = await getDocs(collectionRef);
-    if(!collectionRef || !memberList){
-        res.status(404);
-        res.statusMessage = "Failure";
-    }
-    else{
-        memberList.forEach((doc) => {
-            const docData = doc.data();
-            Data.push(docData['member_list']);
-        })
-        console.log(Data);
-        res.status(200);
-        res.statusMessage = "Success";
-        res.send(Data);
-    }
-    res.send("About Router");
+interface resdata {
+  RES_STATUS: number; 
+  RES_MSG: string;
+  RES_DATA: DocumentData[];
+};
+
+aboutRouter.get("/", (req: Request, res: Response) => {
+  res.send('this is About Router');
 });
 
 //각 운영진의 역할 및 인원을 담은 List 반환
-aboutRouter.post("/getMemberList", (req: Request, res: Response) => {
-    
+aboutRouter.post("/getMemberList", async (req: Request, res: Response) => {
+  const Data: DocumentData[] = [];
+  const resObj: resdata = {
+    RES_STATUS: 200,
+    RES_MSG: 'Success',
+    RES_DATA: []
+  };
+
+  const collectionRef = collection(db, "Members");
+  const memberList = await getDocs(collectionRef);
+  if(!collectionRef || !memberList){
+      resObj['RES_STATUS'] = 404;
+      resObj['RES_MSG'] = 'Failure';
+  }
+  else{
+      memberList.forEach((doc) => {
+          const docData = doc.data();
+          const docMemberList = [...docData['member_list']];
+          docMemberList.forEach((member) => {
+            Data.push({...member})
+          })
+      })
+      resObj['RES_DATA'] = Data;
+  }
+  return JSON.stringify(resObj);
 })
 
 export default aboutRouter;
-/*
-{
-  member_list: [
-    {
-      name: '유용민',
-      stu_id: '20192*22',
-      img: 'img',
-      dept: '소프트웨어학부',
-      role: '부장'
-    }
-  ]
-}
-*/
