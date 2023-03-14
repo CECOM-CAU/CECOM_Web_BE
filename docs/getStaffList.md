@@ -30,8 +30,9 @@ Data description
 {
   RES_STATUS: 200,
   RES_MSG: "Success",
-  RES_DATA: [
-    {
+  RES_DATA: {
+    부서명1: [
+      {
       //memberdata가 여러개 있음
       //memberdata
       stu_id: '20194*94',
@@ -39,8 +40,20 @@ Data description
       name: '유용민',
       role: '부회장',
       img: BASE64_STRING
-    },
+      }
+    ],
+    부서명2: [
+      {
+      //memberdata가 여러개 있음
+      //memberdata
+      stu_id: '20194*94',
+      dept: '소프트웨어학과',
+      name: '유용민',
+      role: '부회장',
+      img: BASE64_STRING
+      }
+    ]
     ....
-  ]
+  }
 }
 ```
