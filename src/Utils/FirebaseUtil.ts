@@ -81,31 +81,12 @@ const getFirebaseDBList = async (collectionID: string) => {
     try{
         let RESULT_DATA_LIST;
 
-        let cntData = 0;
-        let listMember: Array<any> = [];
+        let listMember: any = {};
         let listProject: Array<any> = [];
 
         fbDocument.forEach((curDoc) => {
-            cntData++;
-            if(isMemberList){
-                listMember.push({
-                    id: curDoc.id,
-                    data: {
-                        blog: curDoc.get("blog"),
-                        boj: curDoc.get("boj"),
-                        facebook: curDoc.get("facebook"),
-                        github: curDoc.get("github"),
-                        instagram: curDoc.get("instagram"),
-                        twitter: curDoc.get("twitter"),
-                        comment: curDoc.get("comment"),
-                        company: curDoc.get("company"),
-                        companyImage: curDoc.get("company_img"),
-                        name: curDoc.get("name"),
-                        profileImage: curDoc.get("profile_img"),
-                        history: curDoc.get("history")
-                    }
-                });
-            }else{
+            if(isMemberList) listMember[curDoc.id] = curDoc.data()["member_list"]
+            else{
                 listProject.push({
                     id: curDoc.id,
                     data: {
@@ -123,13 +104,9 @@ const getFirebaseDBList = async (collectionID: string) => {
         });
 
         if(isMemberList){
-            RESULT_DATA_LIST = {
-                count: cntData,
-                data: listMember
-            }
+            RESULT_DATA_LIST = listMember
         }else{
             RESULT_DATA_LIST = {
-                count: cntData,
                 data: listProject
             }
         }

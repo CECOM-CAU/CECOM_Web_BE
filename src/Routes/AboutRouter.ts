@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getMemberData } from "../Utils/FirebaseUtil";
+import { getMemberData, getMemberList } from "../Utils/FirebaseUtil";
 
 const aboutRouter = express.Router();
 
@@ -10,7 +10,8 @@ interface resdata {
 }
 
 aboutRouter.get("/", async (req: Request, res: Response) => {
-  const d = await getMemberData('Accounting');
+  //const d = await getMemberData('Accounting');
+  const d = await getMemberList();
   console.log(d);
   res.send("this is About Router");
 });
