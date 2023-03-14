@@ -19,9 +19,6 @@ export const initFirebase = () => {
     firebaseDB = getFirestore();
 };
 
-export const getMainEvent = async () => {
-    return await getFirebaseDB("Common", "MainEvent");
-};
 
 export const getMemberData = async (memberID: string) => {
     return await getFirebaseDB("Members", memberID);
@@ -56,7 +53,7 @@ const getFirebaseDB = async (collectionID: string, documentID: string) => {
     try{
         RESULT_DATA.RESULT_CODE = 200;
         RESULT_DATA.RESULT_MSG = "Success";
-        RESULT_DATA.RESULT_DATA = fbDocument.data();
+        RESULT_DATA.RESULT_DATA = fbDocument.data()["member_list"];
     }catch(error){
         RESULT_DATA.RESULT_CODE = 100;
         RESULT_DATA.RESULT_MSG = error as string;
