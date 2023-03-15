@@ -3,8 +3,8 @@
 ## Description
 
 요청에 따라서 받아오는 데이터가 다름  
-```/project/getProjectList```에서는 특정 프로젝트의 데이터 받아오기 (상세 내용)  
-```/activity/getActivityList```에서는 특정 친목 활동 데이터 받아오기 (상세 내용)
+```/project/getProjectList```에서는 모든 프로젝트의 데이터 리스트 받아오기  
+```/activity/getActivityList```에서는 모든 친목 활동 데이터 리스트 받아오기
 
 ---
 
