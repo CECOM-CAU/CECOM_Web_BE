@@ -36,13 +36,21 @@ export const getProjectList = async () => {
     return await getFirebaseDBList("Projects");
 };
 
+export const getActivityData = async (activityID: string) => {
+    return await getFirebaseDB("Activitys", activityID);
+};
+
+export const getActivityList = async () => {
+    return await getFirebaseDBList("Activitys");
+};
+
 const getFirebaseDB = async (collectionID: string, documentID: string) => {
     const RESULT_DATA = {
         RESULT_CODE: 0,
         RESULT_MSG: "Ready",
         RESULT_DATA: {}
     }
-
+    const isMemberList = (collectionID == "Members");
     const fbDocument = await getDoc(doc(firebaseDB, collectionID, documentID));
     if(!fbDocument.exists()){
         RESULT_DATA.RESULT_CODE = 100;
@@ -53,7 +61,10 @@ const getFirebaseDB = async (collectionID: string, documentID: string) => {
     try{
         RESULT_DATA.RESULT_CODE = 200;
         RESULT_DATA.RESULT_MSG = "Success";
-        RESULT_DATA.RESULT_DATA = fbDocument.data()["member_list"];
+        if (isMemberList)
+            RESULT_DATA.RESULT_DATA = fbDocument.data()["member_list"];
+        else
+            RESULT_DATA.RESULT_DATA = fbDocument.data();
     }catch(error){
         RESULT_DATA.RESULT_CODE = 100;
         RESULT_DATA.RESULT_MSG = error as string;
@@ -82,33 +93,17 @@ const getFirebaseDBList = async (collectionID: string) => {
         let RESULT_DATA_LIST;
 
         let listMember: any = {};
-        let listProject: Array<any> = [];
+        let listProject: any = {};
 
         fbDocument.forEach((curDoc) => {
             if(isMemberList) listMember[curDoc.id] = curDoc.data()["member_list"]
-            else{
-                listProject.push({
-                    id: curDoc.id,
-                    data: {
-                        title: curDoc.get("title"),
-                        category: curDoc.get("category"),
-                        content: curDoc.get("content"),
-                        date: curDoc.get("date"),
-                        description: curDoc.get("description"),
-                        image: curDoc.get("image"),
-                        tech: curDoc.get("tech"),
-                        user: curDoc.get("user")
-                    }
-                });
-            }
+            else listProject[curDoc.id] = curDoc.data();
         });
 
         if(isMemberList){
             RESULT_DATA_LIST = listMember
         }else{
-            RESULT_DATA_LIST = {
-                data: listProject
-            }
+            RESULT_DATA_LIST = listProject
         }
 
         RESULT_DATA.RESULT_CODE = 200;
