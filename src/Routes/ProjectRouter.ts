@@ -4,10 +4,6 @@ import { getProjectData, getProjectList } from "../Utils/FirebaseUtil";
 
 const projectRouter = express.Router();
 
-projectRouter.get("/", (req: Request, res: Response) => {
-    res.send("About Router");
-});
-
 //특정 프로젝트의 정보를 담은 값 반환
 //매개변수 어떻게 받음?
 projectRouter.post("/getProjectData", async (req: Request, res: Response) => {
