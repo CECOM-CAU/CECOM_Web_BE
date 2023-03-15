@@ -13,7 +13,7 @@ app.use("/project", projectRouter);
 initFirebase();
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Hello, World!");
+    res.redirect("https://cecom.dev");
 });
 
 app.listen(8080, () => {
