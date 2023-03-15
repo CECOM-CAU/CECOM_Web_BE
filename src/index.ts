@@ -1,3 +1,4 @@
+import exp from "constants";
 import express,{ Request, Response } from "express";
 
 import aboutRouter from "./Routes/AboutRouter";
@@ -7,11 +8,15 @@ import projectRouter from "./Routes/ProjectRouter";
 import { initFirebase } from "./Utils/FirebaseUtil";
 
 const app = express();
+
+initFirebase();
+
+app.use(express.json());
+app.use(express.urlencoded());
+
 app.use("/about", aboutRouter);
 app.use("/activity", activityRouter);
 app.use("/project", projectRouter);
-
-initFirebase();
 
 app.get("/", (req: Request, res: Response) => {
     res.redirect("https://cecom.dev");
