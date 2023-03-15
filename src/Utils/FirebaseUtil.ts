@@ -37,11 +37,11 @@ export const getProjectList = async () => {
 };
 
 export const getActivityData = async (activityID: string) => {
-    return await getFirebaseDB("Activitys", activityID);
+    return await getFirebaseDB("Activities", activityID);
 };
 
 export const getActivityList = async () => {
-    return await getFirebaseDBList("Activitys");
+    return await getFirebaseDBList("Activities");
 };
 
 const getFirebaseDB = async (collectionID: string, documentID: string) => {
@@ -61,10 +61,11 @@ const getFirebaseDB = async (collectionID: string, documentID: string) => {
     try{
         RESULT_DATA.RESULT_CODE = 200;
         RESULT_DATA.RESULT_MSG = "Success";
-        if (isMemberList)
+        if(isMemberList){
             RESULT_DATA.RESULT_DATA = fbDocument.data()["member_list"];
-        else
+        }else{
             RESULT_DATA.RESULT_DATA = fbDocument.data();
+        }
     }catch(error){
         RESULT_DATA.RESULT_CODE = 100;
         RESULT_DATA.RESULT_MSG = error as string;
@@ -90,21 +91,15 @@ const getFirebaseDBList = async (collectionID: string) => {
     }
 
     try{
-        let RESULT_DATA_LIST;
-
-        let listMember: any = {};
-        let listProject: any = {};
+        let RESULT_DATA_LIST: any = {};
 
         fbDocument.forEach((curDoc) => {
-            if(isMemberList) listMember[curDoc.id] = curDoc.data()["member_list"]
-            else listProject[curDoc.id] = curDoc.data();
+            if(isMemberList){
+                RESULT_DATA_LIST[curDoc.id] = curDoc.data()["member_list"]
+            }else{
+                RESULT_DATA_LIST[curDoc.id] = curDoc.data();
+            }
         });
-
-        if(isMemberList){
-            RESULT_DATA_LIST = listMember
-        }else{
-            RESULT_DATA_LIST = listProject
-        }
 
         RESULT_DATA.RESULT_CODE = 200;
         RESULT_DATA.RESULT_MSG = "Success";

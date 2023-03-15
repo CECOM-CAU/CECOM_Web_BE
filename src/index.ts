@@ -1,9 +1,10 @@
 import express,{ Request, Response } from "express";
-import { initFirebase } from "./Utils/FirebaseUtil";
 
 import aboutRouter from "./Routes/AboutRouter";
 import activityRouter from "./Routes/ActivityRouter";
 import projectRouter from "./Routes/ProjectRouter";
+
+import { initFirebase } from "./Utils/FirebaseUtil";
 
 const app = express();
 app.use("/about", aboutRouter);
@@ -13,9 +14,9 @@ app.use("/project", projectRouter);
 initFirebase();
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Hello, World!");
+    res.redirect("https://cecom.dev");
 });
 
-app.listen(7777, () => {
+app.listen(8080, () => {
     console.log("Server is Running with Port 8080");
 })
