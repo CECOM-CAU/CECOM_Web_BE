@@ -12,12 +12,12 @@ activityRouter.get("/", (req: Request, res: Response) => {
 activityRouter.post("/getActivityData", async (req: Request, res: Response) => {
     const activity_data = await getActivityData("0001");
     res.send(activity_data);
-  });
+});
   
   //각 운영진의 역할 및 인원을 담은 List 반환
-  activityRouter.post("/getMemberList", async (req: Request, res: Response) => {
+activityRouter.post("/getActivityList", async (req: Request, res: Response) => {
     const activity_list = await getActivityList();
     res.send(activity_list);
-  });
+});
 
 export default activityRouter;
