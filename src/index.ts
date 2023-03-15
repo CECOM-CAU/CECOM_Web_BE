@@ -5,11 +5,11 @@ import aboutRouter from "./Routes/AboutRouter";
 import activityRouter from "./Routes/ActivityRouter";
 import projectRouter from "./Routes/ProjectRouter";
 
-import { initFirebase } from "./Utils/FirebaseUtil";
+import * as FirebaseUtil from "./Utils/FirebaseUtil";
 
 const app = express();
 
-initFirebase();
+FirebaseUtil.initFirebase();
 
 app.use(express.json());
 app.use(express.urlencoded());
