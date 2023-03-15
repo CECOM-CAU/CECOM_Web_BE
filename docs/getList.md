@@ -1,10 +1,10 @@
-# getStaffList
+# getList
 
 ## Description
 
-각 팀원들의 정보를 전달해주는 함수
-/Projects에서는 전체 프로젝트 리스트 받아오기 멘토링/스터디/플젝 여부는 Parameter로 받기
-/Activity에서는 동아리 친목 활동 리스트 받아오기 (제목, 일시, 사진 등).
+요청에 따라서 받아오는 데이터가 다름  
+/Projects에서는 전체 프로젝트의 데이터 받아오기 (상세 내용)  
+/Activity에서는 전체 친목 활동 데이터 받아오기 (상세 내용)
 
 ---
 
@@ -18,31 +18,66 @@ None
 
 Data description
 
-**memberdata**
+**/Projects**
 
-| 변수이름 | 자료형        | 설명                                         | 예시                                    |
-| -------- | ------------- | -------------------------------------------- | --------------------------------------- |
-| stu_id   | string        | 학번. 뒤에서 3번째 위치에 \*을 붙인다        | '20194\*94'                             |
-| dept     | string        | 소속 학과, 단과대/학부 아님                  | '소프트웨어학과'                        |
-| name     | string        | 이름                                         | 유용민                                  |
-| role     | string        | 직책                                         | 부회장                                  |
-| img      | BASE64_STRING | 각자 잘 나온 사진을 BASE64로 인코딩한 문자열 | 'data:image/png;base64,iVBORw0KGgoA...' |
+| 변수이름 | 자료형          | 설명                                                   | 예시                                                            |
+| -------- | --------------- | ------------------------------------------------------ | --------------------------------------------------------------- |
+| title    | string          | 프로젝트의 제목                                        | 'CECOM 홈페이지'                                                |
+| content  | string          | 해당 프로젝트의 내용                                   | 'CECOM 홈페이지 개발 프로젝트입니다.'                           |
+| date     | string          | 해당 프로젝트가 실행된 날짜, format은 YYYY/MM/DD       | '2023/02/01';                                                   |
+| members  | string[]        | 해당 프로젝트에 참여한 사람들 이름                     | [유용민, 박지우, 이상윤, 이주형]                                |
+| imgs     | BASE64_STRING[] | 해당 프로젝트 사진을 BASE64로 인코딩한 문자열들의 배열 | ['data:image/png;base64,iVBORw0KGgoA...', 'abdsa..', 'asvddas'] |
+| tags     | string[]        | 해당 프로젝트에 사용된 기술스택 이름들                 | ["Node.js", "Next.js", "React.js", "Firebase"]                  |
 
 ```json
 {
   RES_STATUS: 200,
   RES_MSG: "Success",
-  RES_DATA: [
-    {
-      //memberdata가 여러개 있음
-      //memberdata
-      stu_id: '20194*94',
-      dept: '소프트웨어학과',
-      name: '유용민',
-      role: '부회장',
-      img: BASE64_STRING
+  RES_DATA: {
+    프로젝트 id:{
+        title: "CECOM 홈페이지",
+        content: "CECOM 홈페이지 개발 프로젝트입니다.",
+        date: "2023/02/01",
+        members: ["유용민", "박지우", "이상윤", "이주형",...],
+        imgs: [BASE64_STRING1, BASE64_STRING1, BASE64_STRING1,..]
+        tags: ["Node.js", "Next.js", "React.js", "Firebase"]
+    },
+    프로젝트 id: {
+
     },
     ....
-  ]
+  }
+}
+```
+
+**/Activity**
+
+| 변수이름 | 자료형          | 설명                                               | 예시                                                            |
+| -------- | --------------- | -------------------------------------------------- | --------------------------------------------------------------- |
+| title    | string          | 활동의 제목                                        | "CECOM 신입생 환영회"                                           |
+| content  | string          | 해당 활동의 내용                                   | "CECOM 신입생 환영회 입니다."                                   |
+| date     | string          | 해당 활동을 진행한 날짜, format은 YYYY/MM/DD       | "2023/02/01";                                                   |
+| members  | string[]        | 해당 활동에 참여한 사람들 이름                     | ["유용민", "박지우", "이상윤", 이주형"]                         |
+| imgs     | BASE64_STRING[] | 해당 활동 사진을 BASE64로 인코딩한 문자열들의 배열 | ['data:image/png;base64,iVBORw0KGgoA...', 'abdsa..', 'asvddas'] |
+| tags     | string[]        | 해당 활동에 담고싶은 헤시태그들 이름들             | ["#CECOM", "#23학번", "#신입생 환영회", "#만나서 잘부탁해요~"]  |
+
+```json
+{
+  RES_STATUS: 200,
+  RES_MSG: "Success",
+  RES_DATA: {
+    활동 id:{
+      title: "CECOM 신입생 환영회",
+      content: "CECOM 신입생 환영회 입니다.",
+      date: "2023/02/01",
+      members: ["유용민", "박지우", "이상윤", "이주형",...],
+      imgs: [BASE64_STRING1, BASE64_STRING1, BASE64_STRING1,..]
+      tags: ["#CECOM", "#23학번", "#신입생 환영회", "#만나서 잘부탁해요~"]
+    },
+    활동 id2:{
+
+    },
+    ...   
+  }
 }
 ```
