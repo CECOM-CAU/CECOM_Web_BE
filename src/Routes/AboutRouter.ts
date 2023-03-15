@@ -6,15 +6,15 @@ const aboutRouter = express.Router();
 
 aboutRouter.post("/getMemberData", async (req: Request, res: Response) => {
   const adminType: string = req.body.AdminType;
-  const memberData = await getMemberData(adminType);
+  const API_RESULT = await getMemberData(adminType);
 
-  res.send(memberData);
+  res.send(API_RESULT);
 });
 
 aboutRouter.post("/getMemberList", async (req: Request, res: Response) => {
-  const memberList = await getMemberList();
+  const API_RESULT = await getMemberList();
 
-  res.send(memberList);
+  res.send(API_RESULT);
 });
 
 export default aboutRouter;
