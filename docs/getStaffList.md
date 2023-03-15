@@ -19,6 +19,14 @@ Data description
 
 **/about/getMemberData**
 
+** 입력 데이터 **
+```json
+{
+  "ADMIN_TYPE": 부서명(Accounting, Admin, Education, Planning, Publicity) 중 하나
+}
+
+```
+
 | 변수이름 | 자료형        | 설명                                         | 예시                                    |
 | -------- | ------------- | -------------------------------------------- | --------------------------------------- |
 | stu_id   | string        | 학번. 뒤에서 3번째 위치에 \*을 붙인다        | '20194\*94'                             |
